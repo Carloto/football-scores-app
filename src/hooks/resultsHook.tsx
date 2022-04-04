@@ -1,13 +1,12 @@
 import useSWR from 'swr';
-import { years } from '../helpers';
 import { fetcher } from '../services';
 
-export function useResults(year: string | undefined) {
-  const yearParam = year ?? years[0];
-  const { data, error } = useSWR(`/${yearParam}?_sort=numero`, fetcher);
+export function useResults(year: string) {
+  const { data, error } = useSWR(`/${year}?_sort=numero`, fetcher);
+
   return {
     results: data,
-    isLoading: !error && (!data || !year),
+    isLoading: !error && !data,
     isError: error,
   };
 }

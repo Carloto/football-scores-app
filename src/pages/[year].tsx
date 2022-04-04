@@ -1,4 +1,4 @@
-import { CircularProgress, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,27 +8,20 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Results } from '../components';
 import { years } from '../helpers';
-import { useResults } from '../hooks';
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { year } = router.query;
 
   const [selectedYear, setSelectedYear] = useState<string>(years[0]);
-  const { results, isLoading, isError } = useResults(
-    year as string | undefined
-  );
 
   useEffect(() => {
     if (year) {
       setSelectedYear(year as string);
     }
   }, [year]);
-
-  if (!isLoading) {
-    console.log(results);
-  }
 
   const handleChange = (event: SelectChangeEvent) => {
     router.push(`/${event.target.value}`);
@@ -87,7 +80,7 @@ const Home: NextPage = () => {
               justifyContent: 'center',
             }}
           >
-            {isLoading && <CircularProgress />}
+            {year && <Results year={year as string} />}
           </Box>
         </Container>
       </main>
