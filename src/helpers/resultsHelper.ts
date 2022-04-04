@@ -29,7 +29,7 @@ export function getRanking(data: any) {
 
       return [
         { teamName: partida.mandante, data: host },
-        { teamname: partida.visitante, data: visitor },
+        { teamName: partida.visitante, data: visitor },
       ];
     })
     .sort((a: any, b: any) => b.data.points - a.data.points);

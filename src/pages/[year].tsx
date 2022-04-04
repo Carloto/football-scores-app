@@ -76,6 +76,7 @@ const Home: NextPage = () => {
           <Box
             sx={{
               marginTop: '20px',
+              marginBottom: '20px',
               display: 'flex',
               justifyContent: 'center',
             }}
