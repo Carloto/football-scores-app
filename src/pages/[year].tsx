@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material';
+import { CircularProgress, Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -6,15 +6,32 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { years } from '../helpers';
+import { useResults } from '../hooks';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const { year } = router.query;
+
   const [selectedYear, setSelectedYear] = useState<string>(years[0]);
-  // const { results, isLoading, isError } = useResults(year);
+  const { results, isLoading, isError } = useResults(
+    year as string | undefined
+  );
+
+  useEffect(() => {
+    if (year) {
+      setSelectedYear(year as string);
+    }
+  }, [year]);
+
+  if (!isLoading) {
+    console.log(results);
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelectedYear(event.target.value);
+    router.push(`/${event.target.value}`);
   };
 
   return (
@@ -53,6 +70,24 @@ const Home: NextPage = () => {
                 ))}
               </Select>
             </FormControl>
+          </Box>
+          <Typography
+            marginTop='20px'
+            marginBottom='20px'
+            textAlign='center'
+            variant='h5'
+            component='div'
+          >
+            Classificação
+          </Typography>
+          <Box
+            sx={{
+              marginTop: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            {isLoading && <CircularProgress />}
           </Box>
         </Container>
       </main>
