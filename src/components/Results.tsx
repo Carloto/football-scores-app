@@ -32,6 +32,7 @@ const Results = ({ year }: ResultsProps) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
+                <TableCell></TableCell>
                 <TableCell align='center'>P</TableCell>
                 <TableCell align='center'>V</TableCell>
                 <TableCell align='center'>E</TableCell>
@@ -42,14 +43,15 @@ const Results = ({ year }: ResultsProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {ranking.map((team: any) => (
+              {ranking.map((team: any, index) => (
                 <TableRow
                   key={team.teamName}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component='th' scope='row'>
-                    {team.teamName}
+                  <TableCell component='th' align='center' scope='row'>
+                    {index + 1}
                   </TableCell>
+                  <TableCell align='left'>{team.teamName}</TableCell>
                   <TableCell align='center'>{team.data.points}</TableCell>
                   <TableCell align='center'>{team.data.wins}</TableCell>
                   <TableCell align='center'>{team.data.ties}</TableCell>
